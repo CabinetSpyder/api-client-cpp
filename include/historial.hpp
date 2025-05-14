@@ -20,4 +20,21 @@ void guardarEnHistorialJSON(const std::string& ciudad,
                              const std::string& fechaHora,
                              const std::string& rutaArchivo = "historial.json");
 
+
+
+/**
+ * @brief Guarda una entrada en el historial de consultas meteorológicas en formato CSV.
+ *
+ * @param ciudad Nombre de la ciudad consultada. [IN]
+ * @param temperatura Temperatura en grados Celsius. [IN]
+ * @param descripcion Descripción del estado del clima. [IN]
+ * @param fechaHora Fecha y hora de la consulta. [IN]
+ * @param rutaArchivo Ruta del archivo JSON donde guardar el historial. [IN]
+ */
+void guardarEnHistorialCSV(const std::string& ciudad, 
+                            double temperatura, 
+                            const std::string& descripcion, 
+                            const std::string& fechaHora, 
+                            const std::string& rutaArchivo = "historial.csv");
+
 #endif

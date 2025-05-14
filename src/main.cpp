@@ -19,24 +19,25 @@ int main() {
 
 
     // Ciudad a consultar
-    std::string city;
+    std::string ciudad;
     std::cout << "Introduce el nombre de la ciudad(ingles): ";
-    std::getline(std::cin, city);
+    std::getline(std::cin, ciudad);
 
     // URL de la API
-    const std::string url = "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=" + apiKey + "&units=metric";
+    const std::string url = "https://api.openweathermap.org/data/2.5/weather?q=" + ciudad + "&appid=" + apiKey + "&units=metric";
     
     json jsonResponse = json::parse(hacerPeticionGET(url));
 
     // Obtener y mostrar la temperatura
-    double temperature = jsonResponse["main"]["temp"];
+    double temperatura = jsonResponse["main"]["temp"];
     std::string description = jsonResponse["weather"][0]["description"];
     double feels_like = jsonResponse["main"]["feels_like"];
 
-    std::cout << "El clima en " << city << " es: " << description << std::endl;
-    std::cout << "Temperatura: " << temperature << "°C" << std::endl;
+    std::cout << "El clima en " << ciudad << " es: " << description << std::endl;
+    std::cout << "Temperatura: " << temperatura << "°C" << std::endl;
     std::cout << "Sensacion termica: " << feels_like << "°C" << std::endl;
 
-    guardarEnHistorialJSON(city, temperature, description, obtenerFechaHoraActual());
+    guardarEnHistorialJSON(ciudad, temperatura, description, obtenerFechaHoraActual());
+    guardarEnHistorialCSV(ciudad, temperatura, description, obtenerFechaHoraActual());
     return 0;
 }
