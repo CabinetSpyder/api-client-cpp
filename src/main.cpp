@@ -37,6 +37,6 @@ int main() {
     std::cout << "Temperatura: " << temperature << "°C" << std::endl;
     std::cout << "Sensacion termica: " << feels_like << "°C" << std::endl;
 
-
+    guardarEnHistorialJSON(city, temperature, description, obtenerFechaHoraActual());
     return 0;
 }

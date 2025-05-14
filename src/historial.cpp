@@ -36,6 +36,6 @@ void guardarEnHistorialJSON(const std::string& ciudad, double temperatura, const
 
     // Escribir al archivo
     std::ofstream archivoSalida(rutaArchivo);
-    archivoSalida << std::setw(4) << historial << std::endl;  // indentado bonito
+    archivoSalida << std::setw(4) << historial << std::endl;  // Metemos la info en la instancia de archivo de salida con indentado bonito, sustityendo todo lo que habia con la nueva info.
     archivoSalida.close();
 }
