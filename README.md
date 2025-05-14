@@ -8,12 +8,18 @@ Este es un proyecto de práctica que implementa un cliente HTTP en C++ utilizand
 - Maneja respuestas en formato JSON usando `nlohmann/json`
 - Modular y fácilmente extensible
 - Pensado como base para futuros proyectos que interactúen con servicios web
+- Implementación de pruebas unitarias utilizando **GoogleTest**
+- Historial de consultas guardado en formato JSON
 
 ## Tecnologías
 
-- C++20
-- libcurl
+- **C++20**: El lenguaje principal utilizado para el desarrollo del proyecto.
+- **libcurl**: Para realizar solicitudes HTTP GET y POST a la API externa.
 - [nlohmann/json](https://github.com/nlohmann/json)
+- **GoogleTest**: Para las pruebas unitarias del proyecto, garantizando la calidad y fiabilidad del código.
+- **CMake**: Para la configuración y construcción del proyecto.
+- **Git**: Utilizado para el control de versiones y gestión del código fuente.
+
 
 ## Instalación
 
@@ -46,7 +52,11 @@ El historial (guardado en historial.json) tiene el siguiente formato en JSON:
 
 ```
 
+## Para ejecutar los test
 
+```bash
+./tests 
+```
 
 🧩 Mejoras progresivas al proyecto actual
 
