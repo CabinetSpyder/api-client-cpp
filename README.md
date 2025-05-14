@@ -30,6 +30,24 @@ make
 
 Nota: La API uysada es la de https://openweathermap.org/api
 
+El historial (guardado en historial.json) tiene el siguiente formato en JSON:
+
+```json 
+{
+  "historial": [
+    {
+      "ciudad": "Madrid",
+      "temperatura": 19.4,
+      "descripcion": "clear sky",
+      "fecha": "2025-05-11 18:30:22"
+    }
+  ]
+}
+
+```
+
+
+
 🧩 Mejoras progresivas al proyecto actual
 
 1. Historial de consultas
