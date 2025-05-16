@@ -58,3 +58,8 @@ void guardarEnHistorialCSV(const std::string& ciudad, double temperatura, const 
 
     archivoSalida.close();
 }
+
+void borrarHistorial(){
+    std::filesystem::remove("historial.json");
+    std::filesystem::remove("historial.csv");
+}

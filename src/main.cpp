@@ -5,39 +5,130 @@
 #include "../include/historial.hpp"
 #include "../include/curl_utils.hpp"
 #include "../include/tiempo.hpp"
+#include "../include/menu.hpp"
+#include "../include/leer_utils.hpp"
 
 using json = nlohmann::json;
 
 
 
 int main() {
+
+
+    /*
+    hacer que el usuario pueda escribir la ciudad que quiere consultar.
+    Que pueda repetir la consulta anterior (la misma ciudad)
+    Que elgija si quiere tener un historial,
+    Que elija si quiere eliminar el historial,
+    Que elija que tipo de historial quiera (json y/o csv)
+    */ 
+
     // Tu API key de OpenWeatherMap
     std::ifstream configFile("../config.json");
     json config;
     configFile >> config;
     std::string apiKey = config["api_key"];
 
-
     // Ciudad a consultar
     std::string ciudad;
-    std::cout << "Introduce el nombre de la ciudad(ingles): ";
-    std::getline(std::cin, ciudad);
+    int opcion;
+    int opcionHistorial;
 
-    // URL de la API
-    const std::string url = "https://api.openweathermap.org/data/2.5/weather?q=" + ciudad + "&appid=" + apiKey + "&units=metric";
+    std::string url;
+
+    //Variables para saber si guardamos un historial
+    bool JsonHistorial = false;
+    bool CSVHistorial = false;
+
+
+
+    while(true){
+        imprimirMenuPrincipal();
+        opcion = leerEnteroDesdeEntrada();
+        if(opcion<1 || opcion>4){
+            std::cout << "Entrada no valida" << std::endl;
+            
+        }else{
     
-    json jsonResponse = json::parse(hacerPeticionGET(url));
+            //TODO ir haciendo las opciones
+            if(opcion == 1){ //Introducir ciudad y hacer consulta
+                std::cout << "Introduce el nombre de la ciudad(ingles): ";
+                std::getline(std::cin, ciudad);
+                
+                // URL de la API
+                url = "https://api.openweathermap.org/data/2.5/weather?q=" + ciudad + "&appid=" + apiKey + "&units=metric";
 
-    // Obtener y mostrar la temperatura
-    double temperatura = jsonResponse["main"]["temp"];
-    std::string description = jsonResponse["weather"][0]["description"];
-    double feels_like = jsonResponse["main"]["feels_like"];
+                json jsonResponse = json::parse(hacerPeticionGET(url));
+                
+                std::cout << std::endl;
+                std::cout << "El clima en " << ciudad << " es: " << jsonResponse["weather"][0]["description"] << std::endl;
+                std::cout << "Temperatura: " << jsonResponse["main"]["temp"] << "°C" << std::endl;
+                std::cout << std::endl;
 
-    std::cout << "El clima en " << ciudad << " es: " << description << std::endl;
-    std::cout << "Temperatura: " << temperatura << "°C" << std::endl;
-    std::cout << "Sensacion termica: " << feels_like << "°C" << std::endl;
+                //Comprobar si se guarda ene el historial
+                if(JsonHistorial) guardarEnHistorialJSON(ciudad, jsonResponse["main"]["temp"],jsonResponse["weather"][0]["description"], obtenerFechaHoraActual());
+                
+                if(CSVHistorial) guardarEnHistorialCSV(ciudad, jsonResponse["main"]["temp"],jsonResponse["weather"][0]["description"], obtenerFechaHoraActual());
 
-    guardarEnHistorialJSON(ciudad, temperatura, description, obtenerFechaHoraActual());
-    guardarEnHistorialCSV(ciudad, temperatura, description, obtenerFechaHoraActual());
+            }else if(opcion == 2){
+                while(true){
+                    imprimirMenuHistorial();
+                    opcionHistorial = leerEnteroDesdeEntrada();
+                    if(opcion<1 || opcion>4){
+                        std::cout << "Entrada no valida" << std::endl;
+
+                    }else{
+                        if(opcionHistorial == 1){
+                            JsonHistorial = true;
+                            std::cout << "El historial se guardara en historial.json" << std::endl;
+                            break;
+
+                        }else if(opcionHistorial == 2){
+                            CSVHistorial = true;
+                            std::cout << "El historial se guardar en historial.csv" << std::endl;
+                            break;
+
+                        }else if(opcionHistorial == 3){
+                            borrarHistorial();
+                            std::cout << "Historial borrado" << std::endl;
+                            break;
+                        }
+
+                    }
+
+                }
+
+            }else if(opcion == 3){
+                
+                if(!ciudad.empty()){ //Se ha hecho una consulta previa
+                    // URL de la API
+                    url = "https://api.openweathermap.org/data/2.5/weather?q=" + ciudad + "&appid=" + apiKey + "&units=metric";
+                    json jsonResponse = json::parse(hacerPeticionGET(url));
+                    
+                    std::cout << std::endl;
+                    std::cout << "El clima en " << ciudad << " es: " << jsonResponse["weather"][0]["description"] << std::endl;
+                    std::cout << "Temperatura: " << jsonResponse["main"]["temp"] << "°C" << std::endl;
+                    std::cout << std::endl;
+
+                    //Comprobar si se guarda ene el historial
+                    if(JsonHistorial) guardarEnHistorialJSON(ciudad, jsonResponse["main"]["temp"],jsonResponse["weather"][0]["description"], obtenerFechaHoraActual());
+                    
+                    if(CSVHistorial) guardarEnHistorialCSV(ciudad, jsonResponse["main"]["temp"],jsonResponse["weather"][0]["description"], obtenerFechaHoraActual());
+
+                }
+
+                
+            }else if(opcion == 4){
+                std::cout << "Gracias por usar el cliente. Nos vemos pronto :D" << std::endl;
+                break;
+            }
+
+        }
+        
+        
+
+    }
+
+
     return 0;
 }

@@ -3,6 +3,7 @@
 
 #include <string>
 #include <fstream>
+#include <filesystem>
 #include "../include/json.hpp"
 
 /**
@@ -36,5 +37,11 @@ void guardarEnHistorialCSV(const std::string& ciudad,
                             const std::string& descripcion, 
                             const std::string& fechaHora, 
                             const std::string& rutaArchivo = "historial.csv");
+
+
+/**
+ * @brief Borra los archivos historial.json e historial.csv
+ */
+void borrarHistorial();
 
 #endif
