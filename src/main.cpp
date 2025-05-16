@@ -74,7 +74,7 @@ int main() {
                 while(true){
                     imprimirMenuHistorial();
                     opcionHistorial = leerEnteroDesdeEntrada();
-                    if(opcion<1 || opcion>4){
+                    if(opcionHistorial<1 || opcionHistorial>4){
                         std::cout << "Entrada no valida" << std::endl;
 
                     }else{
