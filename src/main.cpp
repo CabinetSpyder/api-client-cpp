@@ -110,6 +110,9 @@ int main() {
                     
                     if(CSVHistorial) guardarEnHistorialCSV(ciudad, jsonResponse["main"]["temp"],jsonResponse["weather"][0]["description"], obtenerFechaHoraActual());
 
+                }else{
+                    std::cout << "Primero debes realizar una consulta con una ciudad.\n";
+                    continue;
                 }
 
                 
