@@ -24,13 +24,23 @@ std::string hacerPeticionGET(const std::string& url){
         
         // Ejecutar la solicitud
         CURLcode res = curl_easy_perform(curl);
+
         if(res != CURLE_OK) {
             std::cerr << "Error en la solicitud: " << curl_easy_strerror(res) << std::endl;
+            std::string error_msg = "Error en la solicitud CURL: ";
+            error_msg += curl_easy_strerror(res);
+            curl_easy_cleanup(curl);
+            throw std::runtime_error(error_msg);
 
         }
 
+        long http_code = 0;
+        curl_easy_getinfo(curl, CURLINFO_RESPONSE_CODE, &http_code);
+
         curl_easy_cleanup(curl); //Limpiar instancias de curl           
-        
+        if (http_code != 200) {
+            throw std::runtime_error("Respuesta HTTP no válida. Código: " + std::to_string(http_code));
+        }
     }
 
     return readBuffer; //Devolvemos la respuesta

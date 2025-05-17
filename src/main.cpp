@@ -47,23 +47,28 @@ int main() {
     
             //TODO ir haciendo las opciones
             if(opcion == 1){ //Introducir ciudad y hacer consulta
-                std::cout << "Introduce el nombre de la ciudad(ingles): ";
-                std::getline(std::cin, ciudad);
+                try{
+                    std::cout << "Introduce el nombre de la ciudad(ingles): ";
+                    std::getline(std::cin, ciudad);
+                    
+                    // URL de la API
+                    url = construirURL(ciudad, apiKey);
+
+                    json jsonResponse = json::parse(hacerPeticionGET(url));
+                    
+                    std::cout << std::endl;
+                    std::cout << "El clima en " << ciudad << " es: " << jsonResponse["weather"][0]["description"] << std::endl;
+                    std::cout << "Temperatura: " << jsonResponse["main"]["temp"] << "°C" << std::endl;
+                    std::cout << std::endl;
+
+                    //Comprobar si se guarda ene el historial
+                    if(JsonHistorial) guardarEnHistorialJSON(ciudad, jsonResponse["main"]["temp"],jsonResponse["weather"][0]["description"], obtenerFechaHoraActual());  
+                    if(CSVHistorial) guardarEnHistorialCSV(ciudad, jsonResponse["main"]["temp"],jsonResponse["weather"][0]["description"], obtenerFechaHoraActual());
+
+                }catch(const std::exception& e){
+                    std::cerr << "Ha ocurrido un error al obtener los datos del clima: " << e.what() << std::endl;
+                }
                 
-                // URL de la API
-                url = construirURL(ciudad, apiKey);
-
-                json jsonResponse = json::parse(hacerPeticionGET(url));
-                
-                std::cout << std::endl;
-                std::cout << "El clima en " << ciudad << " es: " << jsonResponse["weather"][0]["description"] << std::endl;
-                std::cout << "Temperatura: " << jsonResponse["main"]["temp"] << "°C" << std::endl;
-                std::cout << std::endl;
-
-                //Comprobar si se guarda ene el historial
-                if(JsonHistorial) guardarEnHistorialJSON(ciudad, jsonResponse["main"]["temp"],jsonResponse["weather"][0]["description"], obtenerFechaHoraActual());  
-                if(CSVHistorial) guardarEnHistorialCSV(ciudad, jsonResponse["main"]["temp"],jsonResponse["weather"][0]["description"], obtenerFechaHoraActual());
-
             }else if(opcion == 2){
                 while(true){
                     imprimirMenuHistorial();
@@ -94,25 +99,30 @@ int main() {
 
             }else if(opcion == 3){
                 
-                if(!ciudad.empty()){ //Se ha hecho una consulta previa
-                    // URL de la API
-                    url = construirURL(ciudad, apiKey);
-                    json jsonResponse = json::parse(hacerPeticionGET(url));
-                    
-                    std::cout << std::endl;
-                    std::cout << "El clima en " << ciudad << " es: " << jsonResponse["weather"][0]["description"] << std::endl;
-                    std::cout << "Temperatura: " << jsonResponse["main"]["temp"] << "°C" << std::endl;
-                    std::cout << std::endl;
+                try{
+                    if(!ciudad.empty()){ //Se ha hecho una consulta previa
+                        // URL de la API
+                        url = construirURL(ciudad, apiKey);
+                        json jsonResponse = json::parse(hacerPeticionGET(url));
+                        
+                        std::cout << std::endl;
+                        std::cout << "El clima en " << ciudad << " es: " << jsonResponse["weather"][0]["description"] << std::endl;
+                        std::cout << "Temperatura: " << jsonResponse["main"]["temp"] << "°C" << std::endl;
+                        std::cout << std::endl;
 
-                    //Comprobar si se guarda ene el historial
-                    if(JsonHistorial) guardarEnHistorialJSON(ciudad, jsonResponse["main"]["temp"],jsonResponse["weather"][0]["description"], obtenerFechaHoraActual());
-                    
-                    if(CSVHistorial) guardarEnHistorialCSV(ciudad, jsonResponse["main"]["temp"],jsonResponse["weather"][0]["description"], obtenerFechaHoraActual());
+                        //Comprobar si se guarda ene el historial
+                        if(JsonHistorial) guardarEnHistorialJSON(ciudad, jsonResponse["main"]["temp"],jsonResponse["weather"][0]["description"], obtenerFechaHoraActual());
+                        
+                        if(CSVHistorial) guardarEnHistorialCSV(ciudad, jsonResponse["main"]["temp"],jsonResponse["weather"][0]["description"], obtenerFechaHoraActual());
 
-                }else{
-                    std::cout << "Primero debes realizar una consulta con una ciudad.\n";
-                    continue;
+                    }else{
+                        std::cout << "Primero debes realizar una consulta con una ciudad.\n";
+                        continue;
+                    }
+                }catch(const std::exception& e){
+                    std::cerr << "Ha ocurrido un error al obtener los datos del clima: " << e.what() << std::endl;
                 }
+                
 
                 
             }else if(opcion == 4){

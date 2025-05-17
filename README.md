@@ -1,15 +1,20 @@
 # API Client en C++
 
-Este es un proyecto de práctica que implementa un cliente HTTP en C++ utilizando la biblioteca `libcurl`. El objetivo es reforzar mis conocimientos en el consumo de APIs REST, manejo de JSON y desarrollo de utilidades en C++ modernas.
+Este proyecto implementa un cliente HTTP en C++ utilizando la biblioteca `libcurl`. Su objetivo principal es reforzar conocimientos prácticos en:
+
+- Consumo de APIs REST
+- Manejo de JSON moderno con `nlohmann/json`
+- Diseño modular en C++
+- Pruebas unitarias con GoogleTest
 
 ## Características
 
-- Realiza peticiones GET y POST a endpoints RESTful
-- Maneja respuestas en formato JSON usando `nlohmann/json`
-- Modular y fácilmente extensible
-- Pensado como base para futuros proyectos que interactúen con servicios web
-- Implementación de pruebas unitarias utilizando **GoogleTest**
-- Historial de consultas guardado en formato JSON
+- Realiza solicitudes HTTP **GET** a la API de OpenWeatherMap
+- Procesa respuestas en formato JSON
+- Guarda un historial de consultas en archivos `JSON` y `CSV`
+- Menú interactivo por consola
+- Estructura modular y fácilmente extensible
+- Pruebas unitarias con **GoogleTest**
 
 ## Tecnologías
 
@@ -34,7 +39,7 @@ make
 
 ```
 
-Nota: La API uysada es la de https://openweathermap.org/api
+⚠️ Nota: Para que funcione correctamente, necesitas una clave de API válida de OpenWeatherMap, que debe colocarse en el archivo config.json.
 
 El historial (guardado en historial.json) tiene el siguiente formato en JSON:
 
@@ -57,11 +62,3 @@ El historial (guardado en historial.json) tiene el siguiente formato en JSON:
 ```bash
 ./tests 
 ```
-
-🧩 Mejoras progresivas al proyecto actual
-
-1. Historial de consultas
-Guardar en un archivo (CSV o JSON) las consultas realizadas con sus respuestas y fecha/hora.
-
-2. Un menú interactivo
-Usar un bucle de menú en consola para permitir al usuario repetir consultas, cambiar ciudad, ver historial, etc.

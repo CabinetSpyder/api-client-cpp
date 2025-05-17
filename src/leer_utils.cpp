@@ -8,6 +8,8 @@ int leerEnteroDesdeEntrada() {
     std::stringstream ss(linea);
     if ((ss >> numero) && ss.eof()) {
         return numero;
+    }else {
+        return -1;
     }
     
     
