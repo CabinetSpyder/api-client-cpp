@@ -61,8 +61,7 @@ int main() {
                 std::cout << std::endl;
 
                 //Comprobar si se guarda ene el historial
-                if(JsonHistorial) guardarEnHistorialJSON(ciudad, jsonResponse["main"]["temp"],jsonResponse["weather"][0]["description"], obtenerFechaHoraActual());
-                
+                if(JsonHistorial) guardarEnHistorialJSON(ciudad, jsonResponse["main"]["temp"],jsonResponse["weather"][0]["description"], obtenerFechaHoraActual());  
                 if(CSVHistorial) guardarEnHistorialCSV(ciudad, jsonResponse["main"]["temp"],jsonResponse["weather"][0]["description"], obtenerFechaHoraActual());
 
             }else if(opcion == 2){
