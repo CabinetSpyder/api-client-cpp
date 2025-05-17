@@ -35,3 +35,9 @@ std::string hacerPeticionGET(const std::string& url){
 
     return readBuffer; //Devolvemos la respuesta
 }
+
+
+std::string construirURL(const std::string& ciudad, const std::string& apiKey) {
+    return "https://api.openweathermap.org/data/2.5/weather?q=" + ciudad + 
+           "&appid=" + apiKey + "&units=metric";
+}

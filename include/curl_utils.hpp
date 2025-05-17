@@ -28,4 +28,13 @@ size_t WriteCallback(void *contents, size_t size, size_t nmemb, void *userp);
  */
 std::string hacerPeticionGET(const std::string& url);
 
+/**
+ * @brief Construye la url para contactar con la api
+ * 
+ * @param ciudad El nombre de la ciiudad a consultar
+ * @param apikey Token secreto para poder hacer peticiones al servicio
+ * @return Cadena con la url ya formada lista para ser usada
+ */
+std::string construirURL(const std::string& ciudad, const std::string& apiKey);
+
 #endif

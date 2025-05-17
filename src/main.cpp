@@ -51,7 +51,7 @@ int main() {
                 std::getline(std::cin, ciudad);
                 
                 // URL de la API
-                url = "https://api.openweathermap.org/data/2.5/weather?q=" + ciudad + "&appid=" + apiKey + "&units=metric";
+                url = construirURL(ciudad, apiKey);
 
                 json jsonResponse = json::parse(hacerPeticionGET(url));
                 
@@ -97,7 +97,7 @@ int main() {
                 
                 if(!ciudad.empty()){ //Se ha hecho una consulta previa
                     // URL de la API
-                    url = "https://api.openweathermap.org/data/2.5/weather?q=" + ciudad + "&appid=" + apiKey + "&units=metric";
+                    url = construirURL(ciudad, apiKey);
                     json jsonResponse = json::parse(hacerPeticionGET(url));
                     
                     std::cout << std::endl;
