@@ -14,17 +14,12 @@ using json = nlohmann::json;
 
 int main() {
 
-
-    /*
-    hacer que el usuario pueda escribir la ciudad que quiere consultar.
-    Que pueda repetir la consulta anterior (la misma ciudad)
-    Que elgija si quiere tener un historial,
-    Que elija si quiere eliminar el historial,
-    Que elija que tipo de historial quiera (json y/o csv)
-    */ 
-
     // Tu API key de OpenWeatherMap
     std::ifstream configFile("../config.json");
+    if (!configFile) {
+        std::cerr << "No se pudo abrir el archivo config.json\n";
+        return 1;
+    }
     json config;
     configFile >> config;
     std::string apiKey = config["api_key"];
